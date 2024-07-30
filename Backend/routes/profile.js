@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const UserProfile = require('../models/UserProfile');
 const upload = require('../middleware/upload')
 const natural = require('natural'); // NLP library
+const auth = require('../middleware/auth')
 const extractTextFromFile = require('../utils/fileParser')
 
 
@@ -12,25 +13,25 @@ const skillsList = require('../skills')
 
 
 // Middleware to verify JWT token
-const authMiddleware = (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1]; // Extract token from header
+// const authMiddleware = (req, res, next) => {
+//     const token = req.headers['authorization']?.split(' ')[1]; // Extract token from header
   
-    if (!token) {
-      return res.status(401).json({ success: false, message: 'No token provided' });
-    }
+//     if (!token) {
+//       return res.status(401).json({ success: false, message: 'No token provided' });
+//     }
   
-    jwt.verify(token, 'your_jwt_secret', (err, decoded) => {
-      if (err) {
-        return res.status(403).json({ success: false, message: 'Invalid token' });
-      }
+//     jwt.verify(token, 'your_jwt_secret', (err, decoded) => {
+//       if (err) {
+//         return res.status(403).json({ success: false, message: 'Invalid token' });
+//       }
       
-      req.user = decoded; // Add user info to request object
-      next();
-    });
-  };
+//       req.user = decoded; // Add user info to request object
+//       next();
+//     });
+//   };
 
 // Get user profile
-router.get('/', authMiddleware, async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
     const profile = await UserProfile.findOne({ _id: req.user.id });
     if (!profile) {
@@ -43,7 +44,7 @@ router.get('/', authMiddleware, async (req, res) => {
 });
 
 // Update user profile
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/', auth, async (req, res) => {
   const { resume, skills } = req.body;
   const profileFields = { resume, skills };
   console.log(req.user.id)
@@ -71,7 +72,7 @@ router.post('/', authMiddleware, async (req, res) => {
 
 
 // Upload resume
-router.post('/upload-resume', authMiddleware, upload.single('resume'), async (req, res) => {
+router.post('/upload-resume', auth, upload.single('resume'), async (req, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ msg: 'No file uploaded' });

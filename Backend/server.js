@@ -35,6 +35,8 @@ app.listen(PORT, () => {
 
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
+const employerRoutes = require('./routes/employer')
 
 app.use('/api/profile',profileRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/employer', employerRoutes)

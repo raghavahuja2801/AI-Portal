@@ -3,6 +3,7 @@ const express = require('express');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const auth = require('../middleware/auth')
 const router = express.Router();
 
 // Register new user
@@ -57,26 +58,26 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Middleware to verify JWT token
-const authMiddleware = (req, res, next) => {
-  const token = req.headers['authorization']?.split(' ')[1]; // Extract token from header
+// // Middleware to verify JWT token
+// const authMiddleware = (req, res, next) => {
+//   const token = req.headers['authorization']?.split(' ')[1]; // Extract token from header
 
-  if (!token) {
-    return res.status(401).json({ success: false, message: 'No token provided' });
-  }
+//   if (!token) {
+//     return res.status(401).json({ success: false, message: 'No token provided' });
+//   }
 
-  jwt.verify(token, 'your_jwt_secret', (err, decoded) => {
-    if (err) {
-      return res.status(403).json({ success: false, message: 'Invalid token' });
-    }
+//   jwt.verify(token, 'your_jwt_secret', (err, decoded) => {
+//     if (err) {
+//       return res.status(403).json({ success: false, message: 'Invalid token' });
+//     }
     
-    req.user = decoded; // Add user info to request object
-    next();
-  });
-};
+//     req.user = decoded; // Add user info to request object
+//     next();
+//   });
+// };
 
 // GET /api/auth/me route
-router.get('/me', authMiddleware, async (req, res) => {
+router.get('/me', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     if (!user) {
