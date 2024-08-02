@@ -1,5 +1,6 @@
 const express = require('express');
 const Company = require('../models/Company')
+const Employer = require('../models/Employer')
 const auth = require('../middleware/auth')
 
 const router = express.Router();
@@ -77,5 +78,40 @@ router.delete('/:id', async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+// Link employer to a company
+router.post('/link', auth, async (req, res) => {
+  const { companyId } = req.body;
+
+  try {
+    const company = await Company.findById(companyId);
+    if (!company) {
+      return res.status(404).json({ msg: 'Company not found' });
+    }
+
+    let employer = await Employer.findOne({ user: req.user.id });
+
+    if (employer) {
+      // Update existing employer data
+      employer.company = companyId;
+      await employer.save();
+      return res.json(employer);
+    }
+
+    // Create new employer data
+    employer = new Employer({
+      user: req.user.id,
+      company: companyId,
+    });
+
+    await employer.save();
+    res.json(employer);
+  } catch (err) {
+    console.log(req.user)
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 
 module.exports = router;

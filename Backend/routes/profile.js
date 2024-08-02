@@ -12,23 +12,6 @@ const extractTextFromFile = require('../utils/fileParser')
 const skillsList = require('../skills')
 
 
-// Middleware to verify JWT token
-// const authMiddleware = (req, res, next) => {
-//     const token = req.headers['authorization']?.split(' ')[1]; // Extract token from header
-  
-//     if (!token) {
-//       return res.status(401).json({ success: false, message: 'No token provided' });
-//     }
-  
-//     jwt.verify(token, 'your_jwt_secret', (err, decoded) => {
-//       if (err) {
-//         return res.status(403).json({ success: false, message: 'Invalid token' });
-//       }
-      
-//       req.user = decoded; // Add user info to request object
-//       next();
-//     });
-//   };
 
 // Get user profile
 router.get('/', auth, async (req, res) => {

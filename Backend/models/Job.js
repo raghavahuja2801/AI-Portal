@@ -1,13 +1,14 @@
+const express = require('express');
 const mongoose = require('mongoose');
 
 // Define the schema for a job
 const jobSchema = new mongoose.Schema({
-  jobTitle: {
+  Title: {
     type: String,
     required: true,
     trim: true
   },
-  jobDescription: {
+  Description: {
     type: String,
     required: true,
     trim: true
@@ -28,7 +29,7 @@ const jobSchema = new mongoose.Schema({
     }
   },
   skillsRequired: [{
-    type: String,
+    type: [String],
     required: true,
     trim: true
   }],
@@ -43,7 +44,14 @@ const jobSchema = new mongoose.Schema({
       return !this.remoteAllowed;
     },
     trim: true
-  }
+  },
+  experience: {
+    type: String,
+  } ,
+  applicants:{
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'UserProfile',
+  },
 });
 
 // Create the model from the schema and export it

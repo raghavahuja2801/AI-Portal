@@ -21,7 +21,14 @@ const companySchema = new mongoose.Schema({
     unique: true,
     trim: true,
     match: [/^\+?[1-9]\d{1,14}$/, 'Please fill a valid phone number']
-  }
+  },
+  about: {
+    type: String,
+  },
+  jobs: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Job',
+  },
 });
 
 // Create the model from the schema and export it

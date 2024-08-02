@@ -3,53 +3,28 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const Employer = require('../models/Employer');
 const Job = require('../models/Job');
-const checkEmployer = require('../middleware/checkEmployer')
+const checkEmployer = require('../middleware/checkEmployer');
 
-
-// Setup employer data
-router.post('/setup', auth, async (req, res) => {
-    const { companyName, companyDescription, website } = req.body;
-  
-    try {
-      let employer = await Employer.findOne({ user: req.user.id });
-  
-      if (employer) {
-        // Update existing employer data
-        employer.companyName = companyName || employer.companyName;
-        employer.companyDescription = companyDescription || employer.companyDescription;
-        employer.website = website || employer.website;
-        await employer.save();
-        return res.json(employer);
-      }
-  
-      // Create new employer data
-      employer = new Employer({
-        user: req.user.id,
-        companyName,
-        companyDescription,
-        website,
-      });
-  
-      await employer.save();
-      res.json(employer);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
-    }
-  });
 
 // Create a job listing
 router.post('/job', [auth, checkEmployer], async (req, res) => {
-  const { title, description, requirements, salary, location } = req.body;
+  const { jobTitle, jobDescription, company, salaryRange, skillsRequired, remoteAllowed, location } = req.body;
 
   try {
+    console.log(req.empl)
+    // Ensure `salaryRange` has min and max
+    if (!salaryRange || typeof salaryRange.min !== 'number' || typeof salaryRange.max !== 'number') {
+      return res.status(400).json({ msg: 'Invalid salary range' });
+    }
     const newJob = new Job({
-      employer: req.employer.id,
-      title,
-      description,
-      requirements,
-      salary,
-      location,
+      employer: req.employer.user, // Assuming `checkEmployer` middleware sets `req.employer`
+      jobTitle,
+      jobDescription,
+      company : req.employer.company,
+      salaryRange,
+      skillsRequired,
+      remoteAllowed,
+      location
     });
 
     const job = await newJob.save();
@@ -58,5 +33,6 @@ router.post('/job', [auth, checkEmployer], async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
 
 module.exports = router;

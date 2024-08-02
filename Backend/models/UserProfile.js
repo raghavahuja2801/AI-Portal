@@ -18,6 +18,35 @@ const UserProfileSchema = new mongoose.Schema({
   skills: {
     type: [String],
   },
+  location: {
+    type: String,
+  },
+  remote: {
+    type: Bool,
+    default: false,
+  },
+  bio: {
+    type: String,
+  },
+  experience: {
+    type: String,
+  },
+  jobs: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Job',
+  },
+  degree: {
+    type: String,
+  },
+  major: {
+    type: String,
+  },
+  university: {
+    type: String,
+  },
+  preferred_titles: {
+    type: [String],
+  },
 });
 
 // Middleware to populate name and email from User
