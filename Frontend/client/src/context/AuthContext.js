@@ -35,8 +35,10 @@ const AuthProvider = ({ children }) => {
             console.log(response.data.token)
             localStorage.setItem('token', response.data.token);
             setUser(response.data.user);
+            return true;
         } catch (error) {
             console.error(error);
+            return false;
         }
     };
 

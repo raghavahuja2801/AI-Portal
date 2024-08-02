@@ -5,8 +5,9 @@ const jwt = require('jsonwebtoken');
 const UserProfile = require('../models/UserProfile');
 const upload = require('../middleware/upload')
 const natural = require('natural'); // NLP library
-const auth = require('../middleware/auth')
-const extractTextFromFile = require('../utils/fileParser')
+const auth = require('../middleware/auth');
+const extractTextFromFile = require('../utils/fileParser');
+const re = require('re');
 
 
 const skillsList = require('../skills')
@@ -28,9 +29,9 @@ router.get('/', auth, async (req, res) => {
 
 // Update user profile
 router.post('/', auth, async (req, res) => {
-  const { resume, skills } = req.body;
-  const profileFields = { resume, skills };
-  console.log(req.user.id)
+  const {  location, remote, bio, experience, major, degree, university, preferred_titles } = req.body;
+  const profileFields = { location, remote, bio, experience, major, degree, university, preferred_titles};
+
 
   try {
     let profile = await UserProfile.findOne({ _id: req.user.id });
@@ -66,13 +67,14 @@ router.post('/upload-resume', auth, upload.single('resume'), async (req, res) =>
   
       // Here you can implement your logic to extract skills and details from text
       const skills = extractSkills(text);
-      const details = extractDetailsFromText(text);
+      const details = extractWorkExperience(text);
   
       // Update the user profile with extracted data
       let profile = await UserProfile.findOne({ _id: req.user.id });
       if (profile) {
         profile.resume = req.file.filename; // Save the filename
         profile.skills = skills;
+        profile.workExperience = details;
         // Add other details as needed
         await profile.save();
       } else {
@@ -83,7 +85,7 @@ router.post('/upload-resume', auth, upload.single('resume'), async (req, res) =>
         });
         await profile.save();
       }
-  
+      console.log(profile)
       res.json({ msg: 'Resume uploaded and processed', profile });
     } catch (err) {
       res.status(500).send('Server Error');
@@ -98,11 +100,25 @@ router.post('/upload-resume', auth, upload.single('resume'), async (req, res) =>
     return skills;
   }
   
-  // Dummy function to extract details from text
-  const extractDetailsFromText = (text) => {
-    // Implement your details extraction logic here
-    return {};
-  };
+  const extractWorkExperience = (text) => {
+    const workExperience = [];
+
+    // Define the regex pattern to match job titles and descriptions
+    const experiencePattern = /(Software Engineer Intern|Developer|Intern|Engineer|Analyst)[\s\S]*?(?=PROJECTS|EDUCATION|TECHNICAL SKILLS|$)/gi;
+    const matches = text.match(experiencePattern);
+    
+    if (matches) {
+        matches.forEach(match => {
+            const lines = match.trim().split('\n');
+            const jobTitle = lines[0];
+            const description = lines.slice(1).join('\n');
+            workExperience.push({ jobTitle, description });
+        });
+    }
+
+    return workExperience;
+};
+
 
 
 module.exports = router;

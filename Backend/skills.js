@@ -1,12 +1,12 @@
 const skillsList = [
     // Programming Languages
-    "JavaScript", "Python", "Java", "C++", "C#", "Ruby", "PHP", "Swift", "Objective-C", "TypeScript", "Kotlin", "Go", "Rust", "Scala", "Perl",
+    "JavaScript", "Python", "Java", "C","C++", "C#", "Ruby", "PHP", "Swift", "Objective-C", "TypeScript", "Kotlin", "Go","GoLang","Bash", "Rust", "Scala", "Perl","R",
     
     // Web Development
-    "HTML", "CSS", "SASS", "LESS", "React.js", "Angular", "Vue.js", "Node.js", "Express.js", "Next.js", "Gatsby", "jQuery", "Bootstrap", "Tailwind CSS", "AJAX", "RESTful APIs", "GraphQL",
+    "HTML", "CSS", "SASS", "LESS", "React.js", "Angular", "Vue.js", "Node.js", "Express.js", "Next.js", "Gatsby", "jQuery", "Bootstrap", "Tailwind CSS", "AJAX", "RESTful APIs", "GraphQL","React","Node","Vue","Express","Next","FastAPI","Postman",
     
     // Databases
-    "MySQL", "PostgreSQL", "MongoDB", "SQLite", "Oracle", "SQL Server", "Redis", "Firebase", "Elasticsearch", "DynamoDB",
+    "MySQL", "PostgreSQL","postgres", "MongoDB", "SQLite", "Oracle", "SQL Server", "Redis", "Firebase", "Elasticsearch", "DynamoDB","SQL",
     
     // DevOps and Cloud
     "AWS", "Azure", "Google Cloud Platform", "Docker", "Kubernetes", "Jenkins", "Travis CI", "CircleCI", "Ansible", "Terraform", "Vagrant", "Puppet", "Chef",

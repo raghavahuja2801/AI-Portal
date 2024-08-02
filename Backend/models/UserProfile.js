@@ -22,7 +22,7 @@ const UserProfileSchema = new mongoose.Schema({
     type: String,
   },
   remote: {
-    type: Bool,
+    type: Boolean,
     default: false,
   },
   bio: {
@@ -47,6 +47,12 @@ const UserProfileSchema = new mongoose.Schema({
   preferred_titles: {
     type: [String],
   },
+  workExperience: {
+    type: [{
+      jobTitle: {type: String},
+      jobDescription: {type: String}
+    }]
+  }
 });
 
 // Middleware to populate name and email from User

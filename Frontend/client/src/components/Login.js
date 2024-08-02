@@ -1,15 +1,20 @@
 // src/components/Login.js
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate();
   const { login } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(email, password);
+    if (await login(email, password)){
+      navigate('/upload')
+    }
+    
   };
 
   return (
