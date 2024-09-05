@@ -12,7 +12,16 @@ const re = require('re');
 
 const skillsList = require('../skills')
 
-
+// GET route to fetch all user profiles
+router.get('/profiles', async (req, res) => {
+  try {
+    const profiles = await UserProfile.find();
+    res.json(profiles);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 // Get user profile
 router.get('/', auth, async (req, res) => {
@@ -85,7 +94,6 @@ router.post('/upload-resume', auth, upload.single('resume'), async (req, res) =>
         });
         await profile.save();
       }
-      console.log(profile)
       res.json({ msg: 'Resume uploaded and processed', profile });
     } catch (err) {
       res.status(500).send('Server Error');

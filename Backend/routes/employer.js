@@ -11,7 +11,7 @@ router.post('/job', [auth, checkEmployer], async (req, res) => {
   const { jobTitle, jobDescription, company, salaryRange, skillsRequired, remoteAllowed, location } = req.body;
 
   try {
-    console.log(req.empl)
+    console.log(req.employer)
     // Ensure `salaryRange` has min and max
     if (!salaryRange || typeof salaryRange.min !== 'number' || typeof salaryRange.max !== 'number') {
       return res.status(400).json({ msg: 'Invalid salary range' });
@@ -30,6 +30,7 @@ router.post('/job', [auth, checkEmployer], async (req, res) => {
     const job = await newJob.save();
     res.json(job);
   } catch (err) {
+    console.log(err)
     res.status(500).send('Server Error');
   }
 });
