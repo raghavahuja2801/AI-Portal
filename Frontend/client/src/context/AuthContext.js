@@ -19,7 +19,7 @@ const AuthProvider = ({ children }) => {
         try {
             console.log("Fetching user data from JWT")
             console.log(token_data)
-            const response = await axios.get("http://192.168.29.161:5000/api/auth/me");
+            const response = await axios.get("http://localhost:5000/api/auth/me");
             setUser(response.data.user);
         } catch (error) {
             console.error(error);
@@ -30,7 +30,7 @@ const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         try {
             console.log("Running login request")
-            const response = await axios.post("http://192.168.29.161:5000/api/auth/login", { email, password });
+            const response = await axios.post("http://localhost:5000/api/auth/login", { email, password });
             setToken(response.data.token);
             console.log(response.data.token)
             localStorage.setItem('token', response.data.token);
@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
 
     const register = async (name, email, password) => {
         try {
-            const response = await axios.post("http://192.168.29.161:5000/api/auth/register", { name, email, password });
+            const response = await axios.post("http://localhost:5000/api/auth/register", { name, email, password });
             console.log(response.data.token)
             setToken(response.data.token);
             localStorage.setItem('token', response.data.token);

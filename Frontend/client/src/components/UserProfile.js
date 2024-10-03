@@ -38,7 +38,7 @@ const UserProfileSetup = () => {
     };
 
     try {
-      const response = await axios.post('http://192.168.29.161:5000/api/profile/', profileData);
+      const response = await axios.post('http://localhost:5000/api/profile/', profileData);
       console.log('Profile saved:', response.data);
       navigate('/upload')
       

@@ -11,7 +11,9 @@ const PORT = process.env.PORT || 5000;
 
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000' // Replace with your frontend's URL
+}));
 
 mongoose.connect('mongodb://localhost:27017/jobPortal', {
   useNewUrlParser: true,
@@ -37,10 +39,8 @@ const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
 const employerRoutes = require('./routes/employer')
 const companyRoutes = require('./routes/company')
-const resumeRoutes = require('./routes/resume')
 
 app.use('/api/profile',profileRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/employer', employerRoutes)
 app.use('/api/company', companyRoutes)
-app.use('/api/resume', resumeRoutes);

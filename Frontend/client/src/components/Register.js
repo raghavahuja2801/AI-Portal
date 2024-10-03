@@ -12,6 +12,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Signing Up!!");
     await register(name, email, password);
     navigate('/profile');
   };

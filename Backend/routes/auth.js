@@ -9,6 +9,7 @@ const router = express.Router();
 // Register new user
 router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
+  console.log("REGISTER REQUEST RECIEVED!")
 
   try {
     const user = new User({ name, email, password });
@@ -58,23 +59,6 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// // Middleware to verify JWT token
-// const authMiddleware = (req, res, next) => {
-//   const token = req.headers['authorization']?.split(' ')[1]; // Extract token from header
-
-//   if (!token) {
-//     return res.status(401).json({ success: false, message: 'No token provided' });
-//   }
-
-//   jwt.verify(token, 'your_jwt_secret', (err, decoded) => {
-//     if (err) {
-//       return res.status(403).json({ success: false, message: 'Invalid token' });
-//     }
-    
-//     req.user = decoded; // Add user info to request object
-//     next();
-//   });
-// };
 
 // GET /api/auth/me route
 router.get('/me', auth, async (req, res) => {
@@ -92,3 +76,7 @@ router.get('/me', auth, async (req, res) => {
 
 
 module.exports = router;
+
+
+
+

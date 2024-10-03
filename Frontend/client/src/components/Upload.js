@@ -14,7 +14,7 @@ const UploadResume = () => {
     formData.append('resume', file);
 
     try {
-      const response = await axios.post('http://192.168.29.161:5000/api/profile/upload-resume', formData, {
+      const response = await axios.post('http://localhost:5000/api/profile/upload-resume', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

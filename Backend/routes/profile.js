@@ -7,6 +7,7 @@ const upload = require('../middleware/upload')
 const natural = require('natural'); // NLP library
 const auth = require('../middleware/auth');
 const extractTextFromFile = require('../utils/fileParser');
+const generateResumeMiddleware = require('../middleware/latex')
 const re = require('re');
 
 
@@ -100,6 +101,19 @@ router.post('/upload-resume', auth, upload.single('resume'), async (req, res) =>
       console.log(err)
     }
   });
+
+  // Route to generate resume and download the PDF
+router.post('/generate-resume', auth, generateResumeMiddleware, (req, res) => {
+  try {
+      const pdfFilePath = req.generatedResume.pdfFilePath;
+
+      // Send the generated PDF as a download
+      res.download(pdfFilePath, `${req.user.id}_resume.pdf`);
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Error downloading the resume PDF.');
+  }
+});
   
   function extractSkills(text) {
     const tokenizer = new natural.WordTokenizer();
