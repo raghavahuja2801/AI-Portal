@@ -64,9 +64,9 @@ The system enables users to upload their resumes, extract relevant skills, and b
    PORT=5000
    ```
    
-   +MONGO_URI: Your MongoDB connection string.
-   +JWT_SECRET: Secret key for JWT authentication.
-   +PORT: Server port number.
++MONGO_URI: Your MongoDB connection string.
++JWT_SECRET: Secret key for JWT authentication.
++PORT: Server port number.
 
 4.**Run the Development Servers:**
    # Backend
@@ -81,7 +81,7 @@ The system enables users to upload their resumes, extract relevant skills, and b
    ```
 
 5.**Access the Application:**
-   Open your browser and navigate to http://localhost:3000 for the frontend and http://localhost:5000 for the backend API.
+   -Open your browser and navigate to http://localhost:3000 for the frontend and http://localhost:5000 for the backend API.
 
 6.**Folder Structure**
    ai-job-portal/
