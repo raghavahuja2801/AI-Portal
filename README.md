@@ -48,17 +48,64 @@ The system enables users to upload their resumes, extract relevant skills, and b
    ```bash
    cd Backend
    npm install
+   ```
 
-# Frontend installation
-```bash
-cd ../Frontend
-npm install
+   # Frontend installation
+   ```bash
+   cd ../Frontend
+   npm install
+   ```
 
 3. **Configure Environment Variables:**
-   Create a .env file in the backend directory with the following content:
+   # Create a .env file in the backend directory with the following content:
    ```bash
    MONGO_URI=your_mongodb_uri
    JWT_SECRET=your_secret_key
    PORT=5000
+   ```
+   -MONGO_URI: Your MongoDB connection string.
+   -JWT_SECRET: Secret key for JWT authentication.
+   -PORT: Server port number.
 
 4.**Run the Development Servers:**
+   # Backend
+   ```bash
+   cd Backend
+   npm start
+   ```
+   # Frontend
+   ```bash
+   cd ../Frontend
+   npm start
+   ```
+
+5.**Access the Application:**
+   Open your browser and navigate to http://localhost:3000 for the frontend and http://localhost:5000 for the backend API.
+
+6.**Folder Structure**
+   ai-job-portal/
+   │
+   ├── Backend/               # Backend server (Express, Node.js, MongoDB)
+   │   ├── models/            # Mongoose schemas for User, Profile, Employer, Jobs
+   │   ├── routes/            # API routes for authentication, profiles, jobs, etc.
+   │   ├── middleware/        # Middleware (Auth, LaTeX generator, file upload)
+   │   ├── latex/             # LaTeX templates for resume generation
+   │   ├── server.js          # Main server file
+   │   └── ...
+   │
+   ├── Frontend/              # Frontend client (React, Redux)
+   │   ├── src/               # React components, actions, reducers
+   │   ├── public/            # Static files
+   │   └── ...
+   │
+   └── README.md              # Project README
+7.**API Documentation**
+
+   HTTP Method	Endpoint	Description
+   POST	/api/auth/register	Register a new user
+   POST	/api/auth/login	Login and get a JWT token
+   POST	/api/profile	Create or update user profile
+   POST	/api/profile/upload	Upload resume and parse skills
+   POST	/api/employer/job	Employer posts a new job
+   GET	/api/jobs	Get list of jobs
+   GET	/api/profile/:id	Get user profile by ID
