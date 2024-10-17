@@ -43,3 +43,22 @@ The system enables users to upload their resumes, extract relevant skills, and b
    ```bash
    git clone https://github.com/yourusername/ai-job-portal.git
    cd ai-job-portal
+2. **Install Dependencies:**
+
+   ```bash
+# Backend installation
+   cd Backend
+   npm install
+
+# Frontend installation
+cd ../Frontend
+npm install
+
+3. **Configure Environment Variables:**
+   Create a .env file in the backend directory with the following content:
+   ```bash
+   MONGO_URI=your_mongodb_uri
+   JWT_SECRET=your_secret_key
+   PORT=5000
+
+4.**Run the Development Servers:**
