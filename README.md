@@ -44,13 +44,13 @@ The system enables users to upload their resumes, extract relevant skills, and b
    git clone https://github.com/yourusername/ai-job-portal.git
    cd ai-job-portal
 2. **Install Dependencies:**
-
+   # Backend installation
    ```bash
-# Backend installation
    cd Backend
    npm install
 
 # Frontend installation
+```bash
 cd ../Frontend
 npm install
 
